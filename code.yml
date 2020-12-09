@@ -1,0 +1,29 @@
+- hosts: loadbalancer
+  tasks:
+   - name: "installing haproxy Software"
+     package:
+      name: "haproxy"
+      state: present
+   - name: "copying haproxy Config file"
+     template:
+      src: "/haproxy.cfg"
+      dest: "/etc/haproxy/haproxy.cfg"
+   - name: "restarting haproxy service"
+     service:
+      name: "haproxy"
+      state: restarted
+- hosts: webserver
+  tasks:
+   - name: "Installing http Software"
+     package:
+      name: "httpd"
+      state: present
+   - name: "copying webpage"
+     template:
+      src: /index.html
+      dest: /var/www/html/index.html
+   - name: "restarting http service"
+     service:
+      name: "httpd"
+      state: restarted
+
